@@ -1,38 +1,57 @@
-import { Meta, ColorPalette, ColorItem, Typeset } from '@storybook/blocks';
 import { ConfigProvider } from 'antd';
 import { Button, Input, Card, Tag, Badge, Space } from 'antd';
 
 import { themeConfig } from './theme';
 
-<Meta title="Foundations/Sistema de diseño" />
+export const ColorSwatch = ({ name, color }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+    <div
+      style={{
+        width: 48,
+        height: 48,
+        borderRadius: 8,
+        backgroundColor: color,
+        border: '1px solid #d0d0d0',
+      }}
+    />
+    <div>
+      <strong>{name}</strong>
+      <div style={{ fontFamily: 'monospace', fontSize: 12, color: '#6b7280' }}>{color}</div>
+    </div>
+  </div>
+);
+
+export const TypeSample = ({ size, label }) => (
+  <div style={{ marginBottom: 16 }}>
+    <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 4 }}>{label} — {size}px</div>
+    <div style={{ fontSize: size, fontFamily: "'Avenir Next', 'Montserrat', 'Inter', sans-serif" }}>
+      Envío rápido, seguro y eficiente.
+    </div>
+  </div>
+);
 
 # Sistema de diseño
 
 Esta página resume los **tokens visuales** y los **componentes base** del sistema de diseño inspirado en [eaship.io](https://eaship.io).
 
-Es útil como referencia rápida para diseñadores, desarrolladores y agentes de IA.
+Sirve como referencia rápida para diseñadores, desarrolladores y agentes de IA.
 
 ---
 
 ## Colores
 
-<ColorPalette>
-  <ColorItem
-    title="Primary"
-    subtitle="Color principal de acción"
-    colors={{ primary: '#26acba', hover: '#44cccc', active: '#1e8e9a' }}
-  />
-  <ColorItem
-    title="Texto y fondos"
-    subtitle="Neutros del sistema"
-    colors={{ text: '#485463', background: '#ffffff', surface: '#f8f9f9', border: '#d0d0d0' }}
-  />
-  <ColorItem
-    title="Acentos"
-    subtitle="Colores de estado e ilustración"
-    colors={{ accent: '#64d7dd', soft: '#e0f7f8', error: '#EF6B51', warning: '#faad14', success: '#52c41a' }}
-  />
-</ColorPalette>
+<ColorSwatch name="Primary" color="#26acba" />
+<ColorSwatch name="Primary Hover" color="#44cccc" />
+<ColorSwatch name="Primary Active" color="#1e8e9a" />
+<ColorSwatch name="Accent" color="#64d7dd" />
+<ColorSwatch name="Soft" color="#e0f7f8" />
+<ColorSwatch name="Text" color="#485463" />
+<ColorSwatch name="Background" color="#ffffff" />
+<ColorSwatch name="Surface" color="#f8f9f9" />
+<ColorSwatch name="Border" color="#d0d0d0" />
+<ColorSwatch name="Error" color="#EF6B51" />
+<ColorSwatch name="Warning" color="#faad14" />
+<ColorSwatch name="Success" color="#52c41a" />
 
 ---
 
@@ -40,18 +59,19 @@ Es útil como referencia rápida para diseñadores, desarrolladores y agentes de
 
 Fuente principal: **Avenir Next** (fallback: Montserrat, Inter, sans-serif).
 
-<Typeset
-  fontFamily="Avenir Next, Montserrat, Inter, sans-serif"
-  fontSizes={[12, 14, 16, 20, 24, 32, 40]}
-  fontWeight={400}
-  sampleText="Envío rápido, seguro y eficiente."
-/>
+<TypeSample size={12} label="Caption" />
+<TypeSample size={14} label="Body" />
+<TypeSample size={16} label="Body Large" />
+<TypeSample size={20} label="Subtitle" />
+<TypeSample size={24} label="Title Small" />
+<TypeSample size={32} label="Title" />
+<TypeSample size={40} label="Display" />
 
 ---
 
 ## Espaciado y sombra
 
-El sistema usa una escala base de **8 px** para espaciados:
+El sistema usa una escala base de **8 px**:
 
 - `xs`: 4 px
 - `sm`: 8 px
