@@ -4,27 +4,32 @@ Este documento es el punto de partida para cualquier agente de IA que trabaje en
 
 ## 1. Propósito del proyecto
 
-Este repositorio es un **laboratorio de diseño y front-end** para construir un sistema de componentes reutilizable, accesible y bien documentado. Está inspirado visualmente en [eaship.io](https://eaship.io) y usa **Ant Design** como librería base de componentes.
+Este repositorio es un **laboratorio de diseño y front-end** para construir un sistema de componentes reutilizable, accesible y bien documentado. Está inspirado visualmente en [eaship.io](https://eaship.io).
+
+**Importante:** el **sistema de diseño** (tokens, estructura atómica, reglas y documentación) es independiente del stack tecnológico. La implementación actual usa **React + Ant Design + Vite**, pero puede adaptarse al stack que use el cliente (React, Vue, Angular, Svelte, Node.js con otro framework, etc.).
 
 Objetivos:
-- Tener una galería de componentes en Storybook.
+- Tener una galería de componentes en Storybook u otra herramienta equivalente.
 - Organizar los componentes con **Atomic Design**.
 - Documentar y testear el sistema de diseño.
 - Permitir prototipado rápido de templates, páginas, formularios y flujos.
+- Ser portable a distintos entornos tecnológicos según el cliente.
 
-## 2. Stack tecnológico
+## 2. Stack tecnológico actual
 
-| Capa | Tecnología |
-|---|---|
-| Framework | React 19 + TypeScript |
-| Build tool | Vite |
-| Librería UI | Ant Design |
-| Estilos | Tailwind CSS v4 + tokens propios en `src/theme.ts` |
-| Galería de componentes | Storybook 10 |
-| Tests de componentes | Vitest (modo browser con Playwright) |
-| Tests end-to-end | Playwright |
-| Accesibilidad | Storybook a11y addon |
-| Control de versiones | Git + GitHub |
+Este es el stack de la implementación de referencia. El sistema de diseño puede migrarse a otros stacks.
+
+| Capa | Tecnología actual | Alternativas válidas |
+|---|---|---|
+| Framework | React 19 + TypeScript | Vue, Angular, Svelte, Solid, Next.js, Nuxt, Astro... |
+| Build tool | Vite | Webpack, Parcel, Create React App, Vue CLI, Angular CLI... |
+| Librería UI | Ant Design | Material UI, shadcn/ui, Chakra UI, Bootstrap, Element Plus, Vuetify... |
+| Estilos | Tailwind CSS v4 + tokens en `src/theme.ts` | CSS Modules, Styled Components, SCSS, Less, PostCSS... |
+| Galería de componentes | Storybook 10 | Ladle, Histoire, Styleguidist, Docusaurus... |
+| Tests de componentes | Vitest (modo browser con Playwright) | Jest, Testing Library, Cypress Component Testing... |
+| Tests end-to-end | Playwright | Cypress, Selenium, Puppeteer... |
+| Accesibilidad | Storybook a11y addon | axe-core, eslint-plugin-jsx-a11y, Lighthouse CI... |
+| Control de versiones | Git + GitHub | GitLab, Bitbucket... |
 
 ## 3. Cómo arrancar el entorno
 
@@ -87,9 +92,9 @@ Tipografía:
 - `Avenir Next` como fuente ideal (es de pago).
 - Fallback: `Montserrat`, `Inter`, sans-serif.
 
-El tema se aplica mediante `ConfigProvider` de Ant Design en `.storybook/preview.tsx`.
+En la implementación actual, el tema se aplica mediante `ConfigProvider` de Ant Design en `.storybook/preview.tsx`. En otro framework se adapta a su sistema equivalente.
 
-**Regla importante:** nunca hardcodees colores o fuentes en componentes. Usa siempre `src/theme.ts` o los tokens de Ant Design.
+**Regla importante:** nunca hardcodees colores o fuentes en componentes. Usa siempre `src/theme.ts` o el sistema de tokens del stack elegido.
 
 ## 6. Convenciones de componentes (Atomic Design)
 
@@ -113,12 +118,12 @@ Nombre/
   Nombre.stories.tsx   # Historia en Storybook
 ```
 
-Si el componente tiene estilos propios (no de Ant Design), añade un archivo CSS o usa Tailwind.
+Si el componente tiene estilos propios (no de la librería UI), añade un archivo CSS o usa Tailwind.
 
 ### Nombres
 
 - Componentes en **PascalCase**.
-- Si son wrappers de Ant Design, usa el prefijo `Ant` (ej: `AntButton`, `AntShipmentCard`).
+- Si son wrappers de Ant Design, usa el prefijo `Ant` (ej: `AntButton`, `AntShipmentCard`). Si el stack cambia, adapta el prefijo a la librería usada.
 - Historias: exportar al menos `Default`.
 - Meta de historias: empezar con `tags: ['ai-generated']`.
 
@@ -179,14 +184,15 @@ npx playwright test
 
 ## 9. Reglas de construcción
 
-1. **Usa Ant Design** para componentes base siempre que sea posible.
-2. **No hardcodees estilos.** Usa `src/theme.ts` o los tokens de Ant Design.
+1. **Usa una librería UI establecida** para componentes base siempre que sea posible (Ant Design, Material UI, shadcn/ui, etc.).
+2. **No hardcodees estilos.** Usa `src/theme.ts` o el sistema de tokens del stack elegido.
 3. **Organiza con Atomic Design.** Consulta la sección 6.
-4. **Cada componente nuevo lleva su historia.**
+4. **Cada componente nuevo lleva su historia** (o su equivalente en la herramienta de documentación usada).
 5. **No subas secretos ni tokens personales** al repositorio.
 6. **Escribe en español** los comentarios y mensajes de commit para mantener consistencia con el usuario.
 7. **No reinstales librerías sin motivo.** Si necesitas algo nuevo, pregunta primero.
 8. **Haz commits pequeños y con mensajes claros.**
+9. **Antes de cambiar de stack o librería UI**, consulta al usuario y actualiza este documento.
 
 ## 10. Tema visual de eaship.io
 
@@ -195,10 +201,39 @@ El proyecto usa como referencia visual a eaship.io. Los colores y tipografía fu
 Si en el futuro se quiere ajustar el tema:
 
 1. Editar `src/theme.ts`.
-2. Los cambios se aplican automáticamente a todos los componentes de Ant Design gracias a `ConfigProvider`.
+2. Los cambios se aplican a los componentes de Ant Design gracias a `ConfigProvider`.
 3. Añadir una nota en `AGENTS.md` si la decisión es importante.
+4. Si cambia el stack, migrar los tokens al formato que entienda la nueva librería.
 
-## 11. Cómo extender este sistema para un agente de IA
+## 11. Portabilidad del sistema de diseño
+
+El sistema de diseño puede moverse a otro stack. Esto es lo que debe conservarse:
+
+- `src/theme.ts` o su equivalente en formato JSON/YAML.
+- La estructura atómica de carpetas (`atoms/`, `molecules/`, `organisms/`, `pages/`, `templates/`).
+- Las reglas de construcción y accesibilidad.
+- La documentación humana e IA.
+
+### Cómo adaptar el sistema a otro stack
+
+| Si el cliente usa... | Acción recomendada |
+|---|---|
+| **React con otra librería** | Reemplazar Ant Design por Material UI, shadcn/ui, Chakra, etc. Mantener `src/theme.ts` y wrappers atómicos. |
+| **Vue** | Migrar a Vue 3 + TypeScript. Usar librerías tipo Element Plus, Vuetify o Quasar. Adaptar Storybook a Vue. |
+| **Angular** | Migrar a Angular + TypeScript. Usar Angular Material o NG-ZORRO (que es Ant Design para Angular). |
+| **Svelte / Solid** | Usar SvelteKit/SolidStart + librería UI compatible o CSS puro. |
+| **Node.js con backend** | El sistema de diseño aplica al frontend. El backend puede ser cualquier tecnología. |
+
+### Pasos para migrar a otro stack
+
+1. **Conservar los tokens**: extraer colores, tipografía, espaciado y radios de `src/theme.ts`.
+2. **Elegir librería UI** equivalente en el nuevo stack.
+3. **Recrear wrappers atómicos** usando la nueva librería, manteniendo nombres y props similares.
+4. **Recrear historias** en la herramienta de documentación correspondiente.
+5. **Adaptar tests** al nuevo entorno de testing.
+6. **Actualizar `AGENTS.md`** con el nuevo stack y librerías.
+
+## 12. Cómo extender este sistema para un agente de IA
 
 Para que una IA genere componentes o prototipos dentro de este sistema, dale como contexto:
 
@@ -206,15 +241,17 @@ Para que una IA genere componentes o prototipos dentro de este sistema, dale com
 - El archivo `src/theme.ts`.
 - La estructura de `src/components/` como ejemplo.
 - La URL o descripción de la empresa/servicio para el que se va a construir.
+- El stack tecnológico del cliente, si es diferente al actual.
 
 Prompt recomendado para pasar a otro agente:
 
-> "Trabaja en el proyecto ubicado en `Dropbox/nacho Dropbox/_Github/storybook-test`. Lee primero `AGENTS.md`, luego `src/theme.ts` y la estructura de `src/components/`. Construye [componente/template/página] siguiendo Atomic Design, usando Ant Design, aplicando el tema de eaship.io y añadiendo su historia en Storybook. Verifica con `npx tsc --noEmit` y `npx vitest --project storybook run` antes de entregar."
+> "Trabaja en el proyecto ubicado en `Dropbox/nacho Dropbox/_Github/storybook-test`. Lee primero `AGENTS.md`, luego `src/theme.ts` y la estructura de `src/components/`. El stack actual de referencia es React + Ant Design + Vite, pero el sistema de diseño debe poder adaptarse al stack del cliente. Construye [componente/template/página] siguiendo Atomic Design, usando la librería UI indicada por el cliente, aplicando el tema de eaship.io y añadiendo su historia/documentación. Verifica con `npx tsc --noEmit` y `npx vitest --project storybook run` antes de entregar."
 
-## 12. Contacto y decisiones importantes
+## 13. Contacto y decisiones importantes
 
 Este proyecto es de aprendizaje y prototipado. Antes de:
-- Cambiar de librería UI (por ejemplo, dejar Ant Design).
+- Cambiar de stack tecnológico (React, Vue, Angular, etc.).
+- Cambiar de librería UI.
 - Reorganizar la estructura de carpetas.
 - Subir datos sensibles.
 - Borrar el historial de Git.
