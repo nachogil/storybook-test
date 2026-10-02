@@ -1,0 +1,113 @@
+import { Meta, ColorPalette, ColorItem, Typeset } from '@storybook/blocks';
+import { ConfigProvider } from 'antd';
+import { Button, Input, Card, Tag, Badge, Space } from 'antd';
+
+import { themeConfig } from './theme';
+
+<Meta title="Foundations/Sistema de diseño" />
+
+# Sistema de diseño
+
+Esta página resume los **tokens visuales** y los **componentes base** del sistema de diseño inspirado en [eaship.io](https://eaship.io).
+
+Es útil como referencia rápida para diseñadores, desarrolladores y agentes de IA.
+
+---
+
+## Colores
+
+<ColorPalette>
+  <ColorItem
+    title="Primary"
+    subtitle="Color principal de acción"
+    colors={{ primary: '#26acba', hover: '#44cccc', active: '#1e8e9a' }}
+  />
+  <ColorItem
+    title="Texto y fondos"
+    subtitle="Neutros del sistema"
+    colors={{ text: '#485463', background: '#ffffff', surface: '#f8f9f9', border: '#d0d0d0' }}
+  />
+  <ColorItem
+    title="Acentos"
+    subtitle="Colores de estado e ilustración"
+    colors={{ accent: '#64d7dd', soft: '#e0f7f8', error: '#EF6B51', warning: '#faad14', success: '#52c41a' }}
+  />
+</ColorPalette>
+
+---
+
+## Tipografía
+
+Fuente principal: **Avenir Next** (fallback: Montserrat, Inter, sans-serif).
+
+<Typeset
+  fontFamily="Avenir Next, Montserrat, Inter, sans-serif"
+  fontSizes={[12, 14, 16, 20, 24, 32, 40]}
+  fontWeight={400}
+  sampleText="Envío rápido, seguro y eficiente."
+/>
+
+---
+
+## Espaciado y sombra
+
+El sistema usa una escala base de **8 px** para espaciados:
+
+- `xs`: 4 px
+- `sm`: 8 px
+- `md`: 16 px
+- `lg`: 24 px
+- `xl`: 32 px
+
+Sombra principal:
+
+```
+4px 4px 10px 0px rgba(0, 0, 0, 0.1)
+```
+
+---
+
+## Componentes base
+
+A continuación puedes ver los componentes más comunes renderizados con el tema del sistema.
+
+<ConfigProvider theme={themeConfig}>
+  <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+    <div>
+      <h3>Botones</h3>
+      <Button type="primary">Primario</Button>{' '}
+      <Button>Default</Button>{' '}
+      <Button type="dashed">Dashed</Button>{' '}
+      <Button type="link">Link</Button>
+    </div>
+
+    <div>
+      <h3>Input</h3>
+      <Input placeholder="Escribe algo..." style={{ width: 240 }} />
+    </div>
+
+    <div>
+      <h3>Tag / Badge</h3>
+      <Tag color="blue">Azul</Tag>{' '}
+      <Tag color="green">Verde</Tag>{' '}
+      <Tag color="orange">Naranja</Tag>{' '}
+      <Badge count={5} style={{ marginLeft: 16 }} />
+    </div>
+
+    <div>
+      <h3>Card</h3>
+      <Card title="Tarjeta de ejemplo" style={{ width: 300 }}>
+        Contenido dentro de una Card del sistema de diseño.
+      </Card>
+    </div>
+  </Space>
+</ConfigProvider>
+
+---
+
+## Enlaces útiles
+
+- Tokens completos: `src/theme.ts`
+- Galería de componentes de Ant Design: `src/showcase/AntDesignShowcase.stories.tsx`
+- Guía para agentes de IA: `AGENTS.md`
+- Guía de despliegue en clientes: `docs/DEPLOYMENT.md`
