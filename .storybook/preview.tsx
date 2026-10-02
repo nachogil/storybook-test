@@ -1,7 +1,18 @@
 import type { Preview } from '@storybook/react-vite'
+import { ConfigProvider } from 'antd'
+import 'antd/dist/reset.css'
+
 import '../src/index.css'
+import { themeConfig } from '../src/theme'
 
 const preview: Preview = {
+  decorators: [
+    (Story) => (
+      <ConfigProvider theme={themeConfig}>
+        <Story />
+      </ConfigProvider>
+    ),
+  ],
   parameters: {
     controls: {
       matchers: {
